@@ -35,7 +35,7 @@ def render_boxbuild():
         type=["pdf"]
     )
     parsed = None
-    if uploaded_pdf:
+    if uploaded_pdf and "parsed_data" not in st.session_state:
         text = read_pdf(uploaded_pdf)
         parsed = parse_form(text)
         st.session_state["parsed_data"] = parsed
