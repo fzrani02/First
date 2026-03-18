@@ -80,12 +80,18 @@ SECTIONS = {
     ]
 }
 
-def render_items_to_check(df):
+def render_items_to_check(df, item_check):
 
     st.markdown("## ITEMS TO CHECK")
     
     st.write ("NOTE: All documents/package from Design/Customer must be updated for every stage of the build including Mass Production")
-   
+    if not item_check:
+        st.warning("No items parsed from PDF")
+        return
+
+    if item in item_check:
+        st.write(item)
+        
     engineer_list = [""] + df["ER"].unique().tolist()
     st.markdown(
         """
