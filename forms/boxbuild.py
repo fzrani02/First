@@ -55,6 +55,9 @@ def render_boxbuild():
         item_check = convert_to_dict(parsed.get("item_check", []))
     
         project_data.update(parsed["project_data"])
+        st.write("PLANT:", member_plant)
+        st.write("PCIS:", member_pcis)
+        st.write("ITEM CHECK:", item_check)
         ##################
         
         revision = project_data.get("revision", "A")
