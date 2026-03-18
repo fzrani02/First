@@ -75,6 +75,24 @@ def extract_project_data(lines):
 def extract_member_plant(lines):
 
     members = []
+    departments_master = [
+        "Product Engineer",
+        "Process Engineer (SMT)",
+        "Process Engineer (Back End)",
+        "Test Engineer (FCT)",
+        "Test Engineer (ICT)",
+        "Production Supervisor (SMT)",
+        "Production Supervisor (Back End)",
+        "QA Engineer",
+        "QC Engineer (IPQC)",
+        "QC Engineer (OQC)",
+        "QC Engineer (IQC)",
+        "Material Controller",
+        "COB Engineer",
+        "DFM Engineer",
+        "Maintenance Engineer"
+    ]
+
     start = None
     end = None
 
@@ -91,32 +109,43 @@ def extract_member_plant(lines):
 
         for line in lines[start:end]:
 
-            if "@" in line:
+            if "@" not in line:
+                continue
 
-                parts = line.split()
+            department = None
+            for dept in department_master:
+                if dept in line:
+                    department = dept
+                    break
 
-                email_index = next((i for i, p in enumerate(parts) if "@" in p), None)
-                
-                if email_index is not None:
-                    email = parts[email_index]
-                    
-                    name = parts[email_index - 2]
-                    ext = parts [email_index -1]
-                    department = " ".join(parts[:email_index - 2])
+            if not department:
+                continue
 
-                    member = {
-                        "department": department.strip(),
-                        "name": name.strip(),
-                        "email": email.strip(),
-                        "ext": ext.strip(),
-                        "M1": "✓" in line,
-                        "M2": False,
-                        "M3": False,
-                        "M4": False
-                    }
+            remaining = line.replace(department, "").replace(email, "").strip()
+            remaining_parts = remaining.split()
 
-                    members.append(member)
+            if len(remaining_parts) == 2:
+                name = remaining_parts[0]
+                ext = remaining_parts[1]
+            elif len(remaining_parts) == 1:
+                ext = ""
+            else:
+                name = ""
+                ext = ""
 
+            member = {
+                "department": department,
+                "name": name, 
+                "email": email,
+                "ext": ext,
+                "M1": "✓" in line,
+                "M2": False,
+                "M3": False,
+                "M4": False   
+            }
+
+            members.append(member)
+            
     return members
 
 def extract_member_pcis(lines):
