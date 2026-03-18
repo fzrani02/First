@@ -58,6 +58,7 @@ def render_boxbuild():
         st.write("PLANT:", member_plant)
         st.write("PCIS:", member_pcis)
         st.write("ITEM CHECK:", item_check)
+        st.write("ITEM LINE:", line)
         ##################
         
         revision = project_data.get("revision", "A")
