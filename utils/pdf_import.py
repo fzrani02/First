@@ -196,7 +196,7 @@ def extract_member_pcis(lines):
         if "PROJECT TEAM MEMBERS (PCIS)" in line:
             start = i
 
-        if "ITEMS TO CHECK" in line:
+        if "ITEM" in line.upper() and "CHECK" in line.upper():
             end = i
             break
 
@@ -251,40 +251,55 @@ def extract_item_check(lines):
 
     for i, line in enumerate(lines):
 
-        if "ITEMS TO CHECK" in line:
+        if "ITEM" in line.upper() and "CHECK" in line.upper():
             start = i
             break
 
-    if start is not None:
+    if start is None:
+        print(" ITEMS TO CHECK NOT FOUND")
         return items
 
+    print("ITEMS SECTION FOUND at line:", start)
+
     for line in lines[start+1:]:
-        if "PROJECT TEAM MEMBERS" in line:
-            break
 
         line = line.strip()
-        if not line:
+        
+        if line.lower().startswith("item"):
+            continue
+
+        if not line or "----" in line:
             continue
 
         parts = line.split()
 
-        if len(parts) >= 4:
-            item = {
+        print("LINE:", line)
+        
+
+        if len(parts) == 1:
+            items.append ({
+                "item": parts[0],
+                "pic": "",
+                "target": "",
+                "remark": "" 
+            })
+
+        elif len(parts) >= 4:
+            items.append({
                 "item": " ".join(parts[:-3]),
                 "pic": parts[-3],
                 "target": parts[-2],
-                "remark": parts[-1] 
-            }
+                "remark": parts[-1]
+            })
         else:
-            item = {
+            items.append ({
                 "item": line,
                 "pic": "",
                 "target": "",
                 "remark": ""
-            }
+            })
             
-        items.append(item)
-        
+    print(" TOTAL ITEMS:", len(items))
     return items
 
 
