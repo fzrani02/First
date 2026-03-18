@@ -113,7 +113,6 @@ def extract_member_plant(lines):
                 continue
 
             parts = line.split()
-            email = next((p for p in parts if "@" in p), None)
 
             if not email:
                 continue
@@ -178,14 +177,18 @@ def extract_member_pcis(lines):
 
                 parts = line.split()
                 
-                email = next((p for p in parts if "@" in p), None)
+                email_index = None
 
-                if not email:
+                for i, p in enumerate(parts):
+                    if "@" in p:
+                        email_index = i
+                        break
+
+                if email_index is None:
                     continue
-                    
+
                 email = parts[email_index]
-                
-                name = parts[email_index - 1]
+                name = parts[email_index - 1] if email_index > 0 else ""
                 department = " ".join(parts[:email_index - 1])
 
                 member = {
