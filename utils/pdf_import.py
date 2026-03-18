@@ -173,10 +173,13 @@ def extract_member_pcis(lines):
                 email_index = next((i for i, p in enumerate(parts) if "@" in p), None)
 
 
-                if email_index is not None:
-                    email = parts[email_index]
-                    name = parts[email_index - 1]
-                    department = " ".join(parts[:email_index - 1])
+                if email_index is None:
+                    continue
+                    
+                email = parts[email_index]
+                
+                name = parts[email_index - 1]
+                department = " ".join(parts[:email_index - 1])
 
                     member = {
                         "department": department.strip(),
