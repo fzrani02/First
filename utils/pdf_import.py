@@ -1,4 +1,5 @@
 import pdfplumber
+import re
 
 def read_pdf(uploaded_file):
 
@@ -86,24 +87,25 @@ def extract_member_plant(lines):
             end = i
             break
 
-    if start and end:
+    if start is not None and end is not None:
 
         for line in lines[start:end]:
 
-            if "Engineer" in line or "Supervisor" in line:
+            if "@" in line:
 
                 parts = line.split()
 
                 email_index = next((i for i, p in enumerate(parts) if "@" in p), None)
                 
-                if email_index: 
-                    name = parts[email_index - 2]
-                    department = " ".join(parts[:email_index - 2])
+                if email_index is not None:
+                    email = parts[email_index]
+                    name = parts[email_index - 1]
+                    department = " ".join(parts[:email_index - 1])
 
                     member = {
-                        "department": department,
-                        "name": name,
-                        "email": parts[email_index],
+                        "department": department.strip(),
+                        "name": name.strip(),
+                        "email": email.strip(),
                         "M1": "✓" in line,
                         "M2": False,
                         "M3": False,
@@ -129,7 +131,7 @@ def extract_member_pcis(lines):
             end = i
             break
 
-    if start and end:
+    if start is not None and end is not None:
 
         for line in lines[start:end]:
 
@@ -139,14 +141,15 @@ def extract_member_pcis(lines):
                 email_index = next((i for i, p in enumerate(parts) if "@" in p), None)
 
 
-                if email_index:
+                if email_index is not None:
+                    email = parts[email_index]
                     name = parts[email_index - 1]
                     department = " ".join(parts[:email_index - 1])
 
                     member = {
-                        "department": department,
-                        "name": name,
-                        "email": parts[email_index],
+                        "department": department.strip(),
+                        "name": name.strip(),
+                        "email": email.strip(),
                         "M1": "✓" in line,
                         "M2": False,
                         "M3": False,
@@ -172,15 +175,13 @@ def extract_item_check(lines):
 
         for line in lines[start+1:]:
 
-            parts = line.split()
-
             if len(parts) >= 2:
 
                 item = {
-                    "item": parts[0],
-                    "pic": parts[1] if len(parts) > 1 else "",
-                    "target": parts[2] if len(parts) > 2 else "",
-                    "remark": parts[3] if len(parts) > 3 else ""
+                    "item": " ".join(parts[:-3]) if len(parts) > 3 else parts[0],
+                    "pic": parts[-3] if len(parts) > 3 else "",
+                    "target": parts[-2] if len(parts) > 2 else "",
+                    "remark": parts[-1] if len(parts) > 1 else ""
                 }
 
                 items.append(item)
