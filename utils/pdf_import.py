@@ -256,23 +256,38 @@ def extract_item_check(lines):
             break
 
     if start is not None:
+        return items
 
-        for line in lines[start+1:]:
+    for line in lines[start+1:]:
+        if "PROJECT TEAM MEMBERS" in line:
+            break
 
-            parts = line.split()
+        line = line.strip()
+        if not line:
+            continue
 
-            if len(parts) >= 2:
+        parts = line.split()
 
-                item = {
-                    "item": " ".join(parts[:-3]) if len(parts) > 3 else parts[0],
-                    "pic": parts[-3] if len(parts) > 3 else "",
-                    "target": parts[-2] if len(parts) > 2 else "",
-                    "remark": parts[-1] if len(parts) > 1 else ""
-                }
-
-                items.append(item)
-
+        if len(parts) >= 4:
+            item = {
+                "item": " ".join(parts[:-3]),
+                "pic": parts[-3],
+                "target": parts[-2],
+                "remark": parts[-1] 
+            }
+        else:
+            item = {
+                "item": line,
+                "pic": "",
+                "target": "",
+                "remark": ""
+            }
+            
+        items.append(item)
+        
     return items
+
+
 
 
 
