@@ -171,9 +171,11 @@ def extract_item_check(lines):
             start = i
             break
 
-    if start:
+    if start is not None:
 
         for line in lines[start+1:]:
+
+            parts = line.split()
 
             if len(parts) >= 2:
 
@@ -187,5 +189,7 @@ def extract_item_check(lines):
                 items.append(item)
 
     return items
+
+st.write("ITEM CHECK:", item_check)
 
 
