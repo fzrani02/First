@@ -114,6 +114,8 @@ def extract_member_plant(lines):
 
             parts = line.split()
 
+            email = next((p for p in parts if "@" in p), None)
+
             if not email:
                 continue
 
@@ -133,7 +135,7 @@ def extract_member_plant(lines):
                 name = remaining_parts[0]
                 ext = remaining_parts[1]
             elif len(remaining_parts) == 1:
-                neme = remaining_parts[0]
+                name = remaining_parts[0]
                 ext = ""
             else:
                 name = ""
