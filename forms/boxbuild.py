@@ -52,7 +52,7 @@ def render_boxbuild():
     
         member_plant = convert_to_dict(parsed.get("member_plant", []))
         member_pcis = convert_to_dict(parsed.get("member_pcis", []))
-        item_check = convert_to_dict(parsed.get("item_check", []))
+        item_check = parsed.get("item_check", [])
     
         project_data.update(parsed["project_data"])
         st.write("PLANT:", member_plant)
@@ -137,7 +137,7 @@ def render_boxbuild():
     autosave()
 
     st.markdown("---")
-    render_items_to_check(df)
+    render_items_to_check(df, item_check)
     st.markdown("---")
 
     from utils.revision_logic import get_next_revision
