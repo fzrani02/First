@@ -25,8 +25,8 @@ def render_project_form():
 
     customer_auto = customer_map.get(initial, "")
     
-    if "customer" not in st.session_state:
-        st.session_state["customer"] = customer_auto
+    if customer_auto and st.session_state.get("customer") != customer_auto:
+      st.session_state["customer"] = customer_auto
       
     customer = st.text_input("Customer", key="customer")
     
