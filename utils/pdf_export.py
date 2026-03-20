@@ -3,7 +3,7 @@ from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, 
 from reportlab.platypus import Image
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
-from forms.item_to_check import SECTIONS, ICT_ROWS, normalize_key
+from components.items_to_check import SECTIONS, ICT_ROWS, normalize_key
 import streamlit as st
 import io
 
