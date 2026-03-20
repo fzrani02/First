@@ -3,6 +3,7 @@ from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, 
 from reportlab.platypus import Image
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
+from forms.item_to_check import SECTIONS, ICT_ROWS, normalize_key
 import streamlit as st
 import io
 
@@ -147,24 +148,80 @@ def generate_pdf(project_data, departments, pcis_departments):
     elements.append(Paragraph("<b>ITEMS TO CHECK</b>", styles['Heading3']))
     elements.append(Spacer(1,10))
 
-    item_table = [["Item","PIC","Target","Remark"]]
+    item_table = [["Section", "Item", "PIC", "Target", "Remark"]]
 
-    for key in st.session_state:
+    for section, items in SECTIONS.items():
+    
+        # SECTION HEADER (biar kebaca di PDF)
+        item_table.append([f"--- {section} ---", "", "", "", ""])
+    
+        for item in items:
+    
+            # ===== SPECIAL CASE: ICT =====
+            if item == "ICT Program / Fixture":
+    
+                # main row
+                pic = ", ".join(st.session_state.get("pic_ict", []))
+                target = st.session_state.get("target_ict", "")
+                remark = st.session_state.get("remark_ict", "")
+    
+                item_table.append([
+                    "",
+                    "ICT Program / Fixture",
+                    pic,
+                    target,
+                    remark
+                ])
+    
+                # sub rows
+                for left, right in ICT_ROWS:
+    
+                    checked = st.session_state.get(f"ict_{normalize_key(left)}", False)
+    
+                    pic = ", ".join(st.session_state.get(f"pic_ict_{normalize_key(left)}", []))
+                    target = st.session_state.get(f"target_ict_{normalize_key(left)}", "")
+                    remark = st.session_state.get(f"remark_ict_{normalize_key(left)}", "")
+    
+                    item_table.append([
+                        "",
+                        f"  - {left} {'✓' if checked else ''}",
+                        pic,
+                        target,
+                        remark
+                    ])
+    
+            # ===== NORMAL ITEM =====
+            else:
+                key_base = f"{normalize_key(section)}_{normalize_key(item)}"
+    
+                pic = ", ".join(st.session_state.get(f"pic_{key_base}", []))
+                target = st.session_state.get(f"target_{key_base}", "")
+                remark = st.session_state.get(f"remark_{key_base}", "")
+    
+                item_table.append([
+                    "",
+                    item,
+                    pic,
+                    target,
+                    remark
+                ])
 
-        if key.startswith("remark_"):
-
-            item = key.replace("remark_","")
-            pic = ", ".join(st.session_state.get(f"pic_{item}",[]))
-            target = st.session_state.get(f"target_{item}","")
-            remark = st.session_state.get(key,"")
-
-            item_table.append([item,pic,target,remark])
-
-    items = Table(item_table, hAlign='LEFT')
+    ###############
+    items = Table(item_table, colWidths=[100,150,100,80,120], hAlign='LEFT')
 
     items.setStyle(TableStyle([
-        ("GRID",(0,0),(-1,-1),1,colors.black),
-        ("BACKGROUND",(0,0),(-1,0),colors.lightgrey)
+        ("GRID",(0,0),(-1,-1),0.5,colors.black),
+        ("BACKGROUND",(0,0),(-1,0),colors.lightgrey),
+    
+        # header bold
+        ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
+    
+        # section row styling
+        ("SPAN",(0,1),(-1,1)),  # nanti akan kena semua section kalau looping
+        ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
+        
+        ("FONTSIZE",(0,0),(-1,-1),8),
+        ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
     ]))
 
     elements.append(items)
