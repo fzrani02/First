@@ -23,19 +23,19 @@ def render_row(item, engineer_list):
         st.multiselect(
             "",
             engineer_list,
-            key=f"pic_{normalize_key(item)}",
+            key=f"pic_row_{normalize_key(item)}",
             label_visibility="collapsed"
         )
     with c4: 
         st.text_input(
             "",
-            key=f"target_{item}",
+            key=f"target_row_{item}",
             label_visibility = "collapsed"
         )
     with c5:
         st.text_input(
             "",
-            key=f"remark_{item}",
+            key=f"remark_row_{item}",
             label_visibility = "collapsed"
         )
 
@@ -191,21 +191,21 @@ def render_items_to_check(df, item_check):
                                 st.multiselect(
                                     "",
                                     engineer_list,
-                                    key=f"pic_{normalize_key(left)}",
+                                    key=f"pic_ict_{normalize_key(left)}",
                                     label_visibility="collapsed"
                                 )
                     
                             with c4:
                                 st.text_input(
                                     "",
-                                    key=f"target_{normalize_key(left)}",
+                                    key=f"target_ict_{normalize_key(left)}",
                                     label_visibility="collapsed"
                                 )
                     
                             with c5:
                                 st.text_input(
                                     "",
-                                    key=f"remark_{normalize_key(left)}",
+                                    key=f"remark_ict_{normalize_key(left)}",
                                     label_visibility="collapsed"
                                 )
                            
