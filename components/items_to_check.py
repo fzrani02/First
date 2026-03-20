@@ -2,37 +2,40 @@
 import streamlit as st
 
 def render_test_checkbox():
-    col1, col2 = st.columns(2)
+    colA, colB = st.columns(2)
 
-    with col1:
+    with colA:
         st.checkbox("Agilent", key="ict_agilent")
         st.checkbox("Teradyne", key="ict_teradyne")
         st.checkbox("Genrad", key="ict_genrad")
 
-    with col2:
+    with colB:
         st.checkbox("Tri", key="ict_tri")
         st.checkbox("Tescon", key="ict_tescon")
 
 def render_row(item, engineer_list):
-    c1, c2, c3,c4 = st.columns([3,2,2,4])
+    c1, c2, c3,c4,c5 = st.columns([3,2,2,2,4])
     
     with c1:
         st.write(item)
 
     with c2:
+        pass
+
+    with c3:
         st.multiselect(
             "",
             engineer_list,
             key=f"pic_{item}",
             label_visibility="collapsed"
         )
-    with c3: 
+    with c4: 
         st.text_input(
             "",
             key=f"target_{item}",
             label_visibility = "collapsed"
         )
-    with c4:
+    with c5:
         st.text_input(
             "",
             key=f"remark_{item}",
@@ -111,12 +114,13 @@ def render_items_to_check(df, item_check):
         """, unsafe_allow_html=True)
     with st.container(border=True, height=600):  
 
-        col1,col2,col3,col4 = st.columns([3,2,2,4])
+        col1,col2,col3,col4, col5 = st.columns([3,2,2,2,4])
 
         col1.markdown("**Check Item**")
-        col2.markdown("**PIC**")
-        col3.markdown("**Target Finish**")
-        col4.markdown("**Remarks**")
+        col2.markdown("**")
+        col3.markdown("**PIC**")
+        col4.markdown("**Target Finish**")
+        col5.markdown("**Remarks**")
     
         st.markdown("---")
     
@@ -124,17 +128,20 @@ def render_items_to_check(df, item_check):
            with st.expander(section, expanded=False):
                for item in items:
                    if item == "ICT Program / Fixture":
-                       c1,c2,c3,c4 = st.columns([3,2,2,4])
+                       c1,c2,c3,c4,c5 = st.columns([3,2,2,2,4])
                        with c1:
                            st.write(item)
-                           
+
                        with c2:
                            render_test_checkbox()
                            
                        with c3:
-                           st.text_input("", key="target_test")
+                           st.multiselect("", engineer_list, key="pic_test")
                            
                        with c4:
+                           st.text_input("", key="target_test")
+                           
+                       with c5:
                            st.text_input("", key="remark_test")
 
                    else:
