@@ -151,7 +151,7 @@ def render_items_to_check(df, item_check):
                            c1,c2,c3,c4,c5 = st.columns([3,2,2,2,4])
 
                            with c1:
-                               st.checkbox(left,key=f"ict_{right,lower()}")
+                               st.checkbox(left,key=f"ict_{right.lower()}")
 
                            with c2:
                                if right:
