@@ -23,7 +23,7 @@ def render_row(item, engineer_list):
         st.multiselect(
             "",
             engineer_list,
-            key=f"pic_{item}",
+            key=f"pic_{normalize_key(item)}",
             label_visibility="collapsed"
         )
     with c4: 
@@ -163,53 +163,52 @@ def render_items_to_check(df, item_check):
            with st.expander(section, expanded=False):
                for item in items:
                    if item == "ICT Program / Fixture":
-                       render_ict_block(
+                        c1,c2,c3,c4,c5 = st.columns([3,2,2,2,4])
+                    
+                        with c1:
+                            st.write("ICT Program / Fixture")
+                            
+                        with c3:
+                            st.multiselect("", engineer_list, key="pic_ict", label_visibility="collapsed")
+                            
+                        with c4:
+                            st.text_input("", key="target_ict", label_visibility="collapsed")
+                            
+                        with c5:
+                            st.text_input("", key="remark_ict", label_visibility="collapsed")
+                    
+                        for left, right in ICT_ROWS:
+                            c1,c2,c3,c4,c5 = st.columns([3,2,2,2,4])
+                    
+                            with c1:
+                                st.checkbox(left, key=f"ict_{normalize_key(left)}")
+                    
+                            with c2:
+                                if right:
+                                    st.checkbox(right, key=f"ict_{normalize_key(right)}")
+                    
+                            with c3:
+                                st.multiselect(
+                                    "",
+                                    engineer_list,
+                                    key=f"pic_{normalize_key(left)}",
+                                    label_visibility="collapsed"
+                                )
+                    
+                            with c4:
+                                st.text_input(
+                                    "",
+                                    key=f"target_{normalize_key(left)}",
+                                    label_visibility="collapsed"
+                                )
+                    
+                            with c5:
+                                st.text_input(
+                                    "",
+                                    key=f"remark_{normalize_key(left)}",
+                                    label_visibility="collapsed"
+                                )
                            
-                           c1,c2,c3,c4,c5 = st.columns([3,2,2,2,4])
-                           with c1:
-                               st.write("ICT Program / Fixture")
-                               
-                           with c3:
-                               st.multiselect("", engineer_list, key="pic_ict", label_visibility="collapsed")
-                               
-                           with c4:
-                               st.text_input("", key="target_ict", label_visibility="collapsed")
-                               
-                           with c5:
-                               st.text_input("", key="remark_ict", label_visibility="collapsed")
-    
-                           for left, right in ICT_ROWS:
-                               c1,c2,c3,c4,c5 = st.columns([3,2,2,2,4])
-    
-                               with c1:
-                                   st.checkbox(left,key=f"ict_{left.lower()}")
-    
-                               with c2:
-                                   if right:
-                                       st.checkbox(right, key=f"ict_{right.lower()}")
-    
-                               with c3:
-                                   st.multiselect(
-                                       "",
-                                       engineer_list,
-                                       key=f"pic_{normalize_key(left)}",
-                                       label_visibility="collapsed"
-                                   )
-    
-                               with c4:
-                                   st.text_input(
-                                       "",
-                                       key=f"target_{normalize_key(left)}",
-                                       label_visibility="collapsed"
-                                   )
-    
-                               with c5:
-                                   st.text_input(
-                                       "",
-                                       key=f"remark_{normalize_key(left)}",
-                                       label_visibility="collapsed"
-                                   )
-                       )
                    else:
                        render_row(item, engineer_list)
                       
