@@ -86,7 +86,7 @@ def render_items_to_check(df, item_check):
     
     st.write ("NOTE: All documents/package from Design/Customer must be updated for every stage of the build including Mass Production")
     if not item_check:
-        st.warning("No items parsed from PDF")
+        st.warning("Using default items (no PDF uploaded)")
 
     for item in item_check:
         st.write(item)
