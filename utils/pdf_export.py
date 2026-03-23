@@ -6,6 +6,7 @@ from reportlab.lib import colors
 from components.items_to_check import SECTIONS, ICT_ROWS, normalize_key
 import streamlit as st
 import io
+import json
 
 
 def generate_pdf(project_data, departments, pcis_departments):
@@ -151,7 +152,7 @@ def generate_pdf(project_data, departments, pcis_departments):
     elements.append(Paragraph("<b>ITEMS TO CHECK</b>", styles['Heading3']))
     elements.append(Spacer(1,10))
 
-    item_table = [["Section", "Item", "PIC", "Target", "Remark"]]
+    item_table = [["Section", "Item", "**", "PIC", "Target", "Remark"]]
 
     for section, items in SECTIONS.items():
     
@@ -185,11 +186,31 @@ def generate_pdf(project_data, departments, pcis_departments):
                     pic = ", ".join(st.session_state.get(f"pic_ict_{normalize_key(left)}", []))
                     target = st.session_state.get(f"target_ict_{normalize_key(left)}", "")
                     remark_text = st.session_state.get(f"remark_ict_{normalize_key(left)}", "")
+
+                    main_checked = st.session_state.get(f"remark_ict_{normalize_key(left)}", False)
+
+                    checkbox_data = {
+                        "item": left,
+                        "checked": main_checked
+                    }
+
+                    if right:
+                        right_checked = st.session_state.get(f"ict_{normalize_key(right)}", False)
+                        checkbox_data["pair"] = {
+                            "label": right,
+                            "checked": right_checked
+                        }
+
+                    checkbox_json = json.dumps(checkbox_data)
+
+                    ##########
+                    
                     remark = Paragraph(remark_text.replace("\n", "<br/>"), remark_style)
     
                     item_table.append([
                         "",
-                        f"  - {left} {'✓' if checked else ''}",
+                        left,
+                        checkbox_json,
                         pic,
                         target,
                         remark
@@ -215,13 +236,15 @@ def generate_pdf(project_data, departments, pcis_departments):
                 item_table.append([
                     "",
                     item,
+                    "",
                     pic,
                     target,
                     remark
                 ])
 
     ###############
-    items = Table(item_table, colWidths=[80,120,80,70,220], hAlign='LEFT')
+    
+    items = Table(item_table, colWidths=[70,110,140,80,70,180], hAlign='LEFT')
 
     items.setStyle(TableStyle([
         ("GRID",(0,0),(-1,-1),0.5,colors.black),
