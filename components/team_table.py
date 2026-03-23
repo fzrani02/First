@@ -59,7 +59,6 @@ def render_team_table(df, initial, departments, editable_col, attendance_data, m
     # ROW DATA
     for dept in departments:
         existing_member = attendance_data.get(dept, {})
-        st.write("DEBUG:", dept, existing_member)
         existing_name = existing_member.get("name", "")
         existing_email = existing_member.get("email", "")
 
