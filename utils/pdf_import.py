@@ -161,8 +161,9 @@ def extract_member_plant(lines):
                 remaining_parts = before_email
 
             if len(remaining_parts) >= 2:
-                name = remaining_parts[0]
-                ext = remaining_parts[1]
+                name = " ".join(remaining_parts[:-1])
+                ext = remaining_parts[-1]
+                
             elif len(remaining_parts) == 1 :
                 name = remaining_parts[0]
                 ext = ""
@@ -175,11 +176,13 @@ def extract_member_plant(lines):
                 "name": name, 
                 "email": email,
                 "ext": ext,
-                "M1": M1,
-                "M2": M2,
-                "M3": M3,
-                "M4": M4
+                "m1": M1,
+                "m2": M2,
+                "m3": M3,
+                "m4": M4
             }
+
+            member["department"] = member["department"].strip()
 
             members.append(member)
             
@@ -234,10 +237,10 @@ def extract_member_pcis(lines):
                     "department": department.strip(),
                     "name": name.strip(),
                     "email": email.strip(),
-                    "M1": M1,
-                    "M2": M2,
-                    "M3": M3,
-                    "M4": M4
+                    "m1": M1,
+                    "m2": M2,
+                    "m3": M3,
+                    "m4": M4
                 }
 
                 members.append(member)
