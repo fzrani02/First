@@ -58,7 +58,6 @@ def render_boxbuild():
         st.write("PLANT:", member_plant)
         st.write("PCIS:", member_pcis)
         st.write("ITEM CHECK:", item_check)
-        st.write("DEBUG MEMBER:", dept, existing_member)
         for dept, data in member_plant.items():
             st.write(dept, data)
             
