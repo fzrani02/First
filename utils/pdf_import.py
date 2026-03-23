@@ -283,6 +283,16 @@ def extract_item_check(lines):
         parts = line.split()
 
         print("LINE:", line)
+
+        ## PARSE CHECKBOX JSON 
+
+        json_match = re.search(r"\{.*\}", line)
+        checkbox_data = None
+
+        if json_match:
+            json_text = json_match.group()
+            checkbox_data = parse_checkbox_json(json_text)
+            print("JSON FOUND:", checkbox_data)
         
 
         if len(parts) == 1:
@@ -290,7 +300,8 @@ def extract_item_check(lines):
                 "item": parts[0],
                 "pic": "",
                 "target": "",
-                "remark": "" 
+                "remark": "",
+                "checkbox": checkbox_data
             })
 
         elif len(parts) >= 4:
@@ -298,14 +309,16 @@ def extract_item_check(lines):
                 "item": " ".join(parts[:-3]),
                 "pic": parts[-3],
                 "target": parts[-2],
-                "remark": parts[-1]
+                "remark": parts[-1],
+                "checkbox": checkbox_data 
             })
         else:
             items.append ({
                 "item": line,
                 "pic": "",
                 "target": "",
-                "remark": ""
+                "remark": "",
+                "checkbox": checkbox_data
             })
             
     print(" TOTAL ITEMS:", len(items))
