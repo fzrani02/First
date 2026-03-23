@@ -55,11 +55,7 @@ def render_boxbuild():
         item_check = parsed.get("item_check", [])
     
         project_data.update(parsed["project_data"])
-        st.write("PLANT:", member_plant)
-        st.write("PCIS:", member_pcis)
         st.write("ITEM CHECK:", item_check)
-        for dept, data in member_plant.items():
-            st.write(dept, data)
             
         ##################
         
