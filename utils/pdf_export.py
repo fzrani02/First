@@ -167,7 +167,7 @@ def generate_pdf(project_data, departments, pcis_departments):
                 pic = ", ".join(st.session_state.get("pic_ict", []))
                 target = st.session_state.get("target_ict", "")
                 remark_text = st.session_state.get("remark_ict", "")
-                remark = Paragraph(remark_text.replace("\n", "<br/>", remark_style)
+                remark = Paragraph(remark_text.replace("\n", "<br/>"), remark_style)
     
                 item_table.append([
                     "",
