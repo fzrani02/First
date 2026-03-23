@@ -26,18 +26,25 @@ def render_row(item, engineer_list, section):
             key=f"pic_{normalize_key(section)}_{normalize_key(item)}",
             label_visibility="collapsed"
         )
-    with c4: 
+    with c4:
+        key_target = f"target_{normalize_key(section)}_{normalize_key(item)}"
+        value_target = st.session_state.get(key_target, "")
+        
         st.text_area(
             "",
-            key=f"target_{normalize_key(section)}_{normalize_key(item)}",
-            height=100 if len(value) > 50 else 60,
+            key=key_target,
+            height=100 if len(value_target) > 50 else 60,
             label_visibility = "collapsed"
         )
+        
     with c5:
+        key_remark = f"remark_{normalize_key(section)}_{normalize_key(item)}"
+        value_remark = st.session_state.get(key_remark, "")
+        
         st.text_area(
             "",
-            key=f"remark_{normalize_key(section)}_{normalize_key(item)}",
-            height=100 if len(value) > 50 else 60,
+            key=key_remark,
+            height=120 if len(value_remark) > 50 else 80,
             label_visibility = "collapsed"
         )
 
