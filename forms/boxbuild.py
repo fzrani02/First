@@ -5,6 +5,8 @@ from components.project_form import render_project_form
 
 from components.team_table import render_team_table
 from components.items_to_check import render_items_to_check
+from components.items_to_check import normalize_key
+
 from utils.revision_logic import get_editable_column
 from utils.pdf_import import read_pdf, parse_form
 from utils.revision_logic import get_next_revision
@@ -23,6 +25,24 @@ def convert_to_dict(data_list):
             result[dept] = item
     return result
 
+def apply_checkbox_state(item_check):
+    for item in item_check:
+        checkbox = item.get("checkbox")
+
+        if not checkbox:
+            continue
+
+        left = checkbox.get("item")
+        if left:
+            st.session_state[f"ict_{normalize_key(left)}"] = checkbox.get("checked", False)
+
+        if "pair" in checkbox:
+            right =  checkbox["pair"].get("label")
+            if right:
+                st.session_state[f"ict_{normalize_key(right)}"] = checkbox["pair"].get("checked", False)
+
+
+
 def render_boxbuild():
     member_plant = {}
     member_pcis = {}
@@ -35,13 +55,17 @@ def render_boxbuild():
         type=["pdf"]
     )
     parsed = None
+    
     if uploaded_pdf and "parsed_data" not in st.session_state:
         text = read_pdf(uploaded_pdf)
         parsed = parse_form(text)
+        
         st.session_state["parsed_data"] = parsed
     
         for key, value in parsed["project_data"].items(): 
              st.session_state[key] = value
+
+        apply_checkbox_state(parsed.get("item_check", []))
 
     st.markdown("---")
 
