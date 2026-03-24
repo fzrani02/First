@@ -230,7 +230,7 @@ def generate_pdf(project_data, departments, pcis_departments):
 
                 if len(remark_text) > 90:
                     remark_text = "<br/>".join(
-                        [remark_text[i:i+90] for i in range(0, len(remark_text), 80)]
+                        [remark_text[i:i+90] for i in range(0, len(remark_text), 90)]
                     )
 
                 print(remark_text)
