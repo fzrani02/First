@@ -92,7 +92,6 @@ def render_boxbuild():
     
         project_data.update(parsed["project_data"])
         st.write("Form render time:", time.time() - t_form)
-        st.write("ITEM CHECK:", item_check)
             
         ##################
         
