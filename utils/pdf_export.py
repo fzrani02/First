@@ -200,10 +200,10 @@ def generate_pdf(project_data, departments, pcis_departments):
                     target = Paragraph(str(st.session_state.get(f"target_ict_{normalize_key(left)}", "")).replace("\n","<br/>"), cell_style)
                     remark_text = st.session_state.get(f"remark_ict_{normalize_key(left)}", "")
 
-                    main_checked = st.session_state.get(f"remark_ict_{normalize_key(left)}", False)
+                    main_checked = st.session_state.get(f"ict_{normalize_key(left)}", False)
 
                     checkbox_data = {
-                        "item": Paragraph(left, cell_style),
+                        "item": left,
                         "checked": main_checked
                     }
 
@@ -244,8 +244,6 @@ def generate_pdf(project_data, departments, pcis_departments):
                 remark = Paragraph(remark_text.replace("\n","<br/>"), remark_style)
 
                 print(remark_text)
-
-                remark = Paragraph(remark_text, remark_style)
     
                 item_table.append([
                     "",
