@@ -31,14 +31,18 @@ def render_team_table(df, initial, departments, editable_col, attendance_data, m
 
     with left:
 
-        st.write("") 
-        st.write("")
-
         col1,col2,col3,col4 = st.columns([3,3,2,3])
-        col1.markdown("**Department**")
-        col2.markdown("**Name**")
-        col3.markdown("**Ext. #**")
-        col4.markdown("**Email**")
+
+        col1.markdown("<div style='text-align:center; font-weight:bold;'>Department</div>", unsafe_allow_html=True)
+        col2.markdown("<div style='text-align:center; font-weight:bold;'>Name</div>", unsafe_allow_html=True)
+        col3.markdown("<div style='text-align:center; font-weight:bold;'>Ext. #</div>", unsafe_allow_html=True)
+        col4.markdown("<div style='text-align:center; font-weight:bold;'>Email</div>", unsafe_allow_html=True)
+
+        #col1,col2,col3,col4 = st.columns([3,3,2,3])
+        #col1.markdown("**Department**")
+        #col2.markdown("**Name**")
+        #col3.markdown("**Ext. #**")
+        #col4.markdown("**Email**")
 
         st.write("")
 
