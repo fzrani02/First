@@ -231,6 +231,8 @@ def generate_pdf(project_data, departments, pcis_departments):
                         [remark_text[i:i+90] for i in range(0, len(remark_text), 80)]
                     )
 
+                print(remark_text)
+
                 remark = Paragraph(remark_text, remark_style)
     
                 item_table.append([
@@ -254,7 +256,6 @@ def generate_pdf(project_data, departments, pcis_departments):
         ("FONTNAME",(0,0),(-1,0),"Helvetica-Bold"),
     
         # section row styling
-        print(remark_text)
         ("FONTNAME",(0,1),(-1,-1),"Helvetica"),
         
         ("FONTSIZE",(0,0),(-1,-1),8),
