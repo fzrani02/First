@@ -94,13 +94,13 @@ def generate_pdf(project_data, departments, pcis_departments):
 
         team_data.append([
             dept,
-            st.session_state.get(f"{dept}_engineer",""),
-            st.session_state.get(f"{dept}_ext",""),
-            st.session_state.get(f"{dept}_email",""),
-            "✓" if st.session_state.get(f"{dept}_m1") else "",
-            "✓" if st.session_state.get(f"{dept}_m2") else "",
-            "✓" if st.session_state.get(f"{dept}_m3") else "",
-            "✓" if st.session_state.get(f"{dept}_m4") else "",
+            st.session_state.get(f"plant_{dept}_engineer",""),
+            st.session_state.get(f"plant_{dept}_ext",""),
+            st.session_state.get(f"plant_{dept}_email",""),
+            "✓" if st.session_state.get(f"plant_{dept}_m1") else "",
+            "✓" if st.session_state.get(f"plant_{dept}_m2") else "",
+            "✓" if st.session_state.get(f"plant_{dept}_m3") else "",
+            "✓" if st.session_state.get(f"plant_{dept}_m4") else "",
         ])
 
     team_table = Table(team_data, hAlign='LEFT')
@@ -127,13 +127,13 @@ def generate_pdf(project_data, departments, pcis_departments):
 
         pcis_data.append([
             dept,
-            st.session_state.get(f"{dept}_engineer",""),
-            st.session_state.get(f"{dept}_ext",""),
-            st.session_state.get(f"{dept}_email",""),
-            "✓" if st.session_state.get(f"{dept}_m1") else "",
-            "✓" if st.session_state.get(f"{dept}_m2") else "",
-            "✓" if st.session_state.get(f"{dept}_m3") else "",
-            "✓" if st.session_state.get(f"{dept}_m4") else "",
+            st.session_state.get(f"pcis_{dept}_engineer",""),
+            st.session_state.get(f"pcis_{dept}_ext",""),
+            st.session_state.get(f"pcis_{dept}_email",""),
+            "✓" if st.session_state.get(f"pcis_{dept}_m1") else "",
+            "✓" if st.session_state.get(f"pcis_{dept}_m2") else "",
+            "✓" if st.session_state.get(f"pcis_{dept}_m3") else "",
+            "✓" if st.session_state.get(f"pcis_{dept}_m4") else "",
         ])
 
     pcis_table = Table(pcis_data, hAlign='LEFT')
