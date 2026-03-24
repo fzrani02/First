@@ -10,7 +10,6 @@ import json
 
 
 def generate_pdf(project_data, departments, pcis_departments):
-    st.write("SESSION STATE DEBUG:", st.session_state)
     
 
     buffer = io.BytesIO()
