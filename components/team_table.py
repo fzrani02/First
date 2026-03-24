@@ -26,24 +26,43 @@ def render_team_table(df, initial, departments, editable_col, attendance_data, m
 
     # HEADER
 
-    col1,col2,col3,col4,col5 = st.columns([3,3,2,3,4])
-    
-    col1.markdown("**Department**")
-    col2.markdown("**Name**")
-    col3.markdown("**Ext. #**")
-    col4.markdown("**Email**")
-    
-    with col5:
-        st.markdown("<div style='text-align:center;'>**ATTENDANCES**</div>", unsafe_allow_html=True)
-    
-        d1,d2,d3,d4 = st.columns(4)
-        d1.date_input("", key=f"{key_prefix}_mtg1", label_visibility="collapsed")
-        d2.date_input("", key=f"{key_prefix}_mtg2", label_visibility="collapsed")
-        d3.date_input("", key=f"{key_prefix}_mtg3", label_visibility="collapsed")
-        d4.date_input("", key=f"{key_prefix}_mtg4", label_visibility="collapsed")
+        
+    left, right = st.columns([3,2])
+
+    with left:
+
+        st.write("") 
+        st.write("")
+
+        col1,col2,col3,col4 = st.columns([3,3,2,3])
+        col1.markdown("**Department**")
+        col2.markdown("**Name**")
+        col3.markdown("**Ext. #**")
+        col4.markdown("**Email**")
+
+        st.write("")
+
+    with right:
+
+        st.markdown("<h3 style='text-align: center;'>ATTENDANCES</h3>", unsafe_allow_html=True)
 
 
-    ##############
+        col1,col2,col3,col4 = st.columns([1,1,1,1], gap="small")
+
+        with col1:
+            st.date_input("", key=f"{key_prefix}_mtg1", disabled=editable_col != 1, label_visibility="collapsed")
+
+        with col2:
+            st.date_input("", key=f"{key_prefix}_mtg2", disabled=editable_col != 2, label_visibility="collapsed")
+
+        with col3:
+            st.date_input("", key=f"{key_prefix}_mtg3", disabled=editable_col != 3, label_visibility="collapsed")
+
+        with col4:
+            st.date_input("", key=f"{key_prefix}_mtg4", disabled=editable_col != 4, label_visibility="collapsed")
+
+    ######
+
 
 
     st.markdown("---")
