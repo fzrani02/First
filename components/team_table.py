@@ -62,7 +62,7 @@ def render_team_table(df, initial, departments, editable_col, attendance_data, m
         existing_name = existing_member.get("name", "")
         existing_email = existing_member.get("email", "")
 
-        engineers = get_engineers_by_department(df, initial, dept)
+        engineers = df[df["Department"] == dept]
         engineer_list = [""] + engineers["ER"].tolist()
 
         left, right = st.columns([3,2])
