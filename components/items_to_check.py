@@ -153,7 +153,12 @@ def render_items_to_check(df, item_check):
         
         </style>
         """, unsafe_allow_html=True)
-    with st.container(border=True, height=600):  
+    with st.container(border=True, height=600):
+
+        st.write("")
+        st.write("")
+        st.write("")
+        
 
         col1,col2,col3,col4, col5 = st.columns([3,2,2,2,4])
 
