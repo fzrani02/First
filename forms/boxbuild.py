@@ -101,12 +101,13 @@ def render_boxbuild():
 
     st.markdown("---")
     
-    t_db = time.time()
-    df = load_database()
-    st.write("Load DB time:", time.time() - t_db)
-    
     pci = project_data.get("pci","")
     initial = project_data["initial"]
+
+    t_db = time.time()
+    df = load_database()
+    df_filtered = df[df["Initial"] == initial]
+    st.write("Load DB time:", time.time() - t_db)
     
     departments = [
         "Product Engineer",
@@ -154,7 +155,7 @@ def render_boxbuild():
         t_table1 = time.time()
         
         render_team_table(
-            df,
+            df_filtered,
             initial,
             departments,
             editable_col,
@@ -170,7 +171,7 @@ def render_boxbuild():
         t_table2 = time.time()
         
         render_team_table(
-            df,
+            df_filtered,
             initial,
             pcis_departments,
             editable_col,
@@ -180,6 +181,7 @@ def render_boxbuild():
             "pcis"
         )
         st.write("Table PCIS time:", time.time() - t_table2)
+        
     autosave()
 
     st.markdown("---")
