@@ -159,7 +159,7 @@ def generate_pdf(project_data, departments, pcis_departments):
     for section, items in SECTIONS.items():
     
         # SECTION HEADER (biar kebaca di PDF)
-        item_table.append([f"--- {section} ---", "", "", "", ""])
+        item_table.append([f"{section}", "", "", "", ""])
     
         for item in items:
     
