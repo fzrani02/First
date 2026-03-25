@@ -11,7 +11,7 @@ def get_editable_column(revision, uploaded_pdf):
         return "m1" 
 
     revision_map = get_revision_week_map()
-    return revisio_map.get(revision, None)
+    return revision_map.get(revision, None)
 
 def get_next_revision(revision):
 
