@@ -7,7 +7,7 @@ def get_revision_week_map():
     
 def get_editable_column(revision, uploaded_pdf):
 
-    if not uploaded_file:
+    if not uploaded_pdf:
         return "m1" 
 
     revision_map = get_revision_week_map()
