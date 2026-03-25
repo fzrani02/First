@@ -28,7 +28,7 @@ def read_pdf(uploaded_file):
     return text
 
 def parse_form(text, uploaded_file):
-    parsed = parse_from(text, uploaded_file)
+  
     lines = text.split("\n")
 
     data = extract_project_data(lines)
