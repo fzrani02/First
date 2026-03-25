@@ -8,7 +8,6 @@ from components.items_to_check import render_items_to_check
 from components.items_to_check import normalize_key
 from components.items_to_check import SECTIONS
 
-
 from utils.revision_logic import get_editable_column
 from utils.pdf_import import read_pdf, parse_form
 from utils.revision_logic import get_next_revision
@@ -94,6 +93,20 @@ def render_boxbuild():
         st.write("PDF parse time:", time.time() - t_pdf)
 
         for item in parsed.get("item_check", []):
+
+            name = item.get("item", "").lower()
+
+            if name == "agilent":
+                st.session_state["ict_agilent"] = item.get("checked", False)
+                st.session_state["ict_tri"] = item.get("pair_checked", False)
+
+            elif name == "teradyne":
+                st.session_state["ict_teradyne"] = item.get("checked", False)
+                st.session_state["ict_tescon"] = item.get("pair_checked", False)
+
+            elif name == "genrad":
+                st.session_state["ict_genrad"] = item.get("checked", False)
+            
             item_name = item.get("item", "")
             key_item = normalize_key(item_name)
 
