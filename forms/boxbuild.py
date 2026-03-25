@@ -110,8 +110,8 @@ def render_boxbuild():
 
             full_key = f"{key_section}_{key_item}"
 
-            target_key = f"target_{key}"
-            remark_key = f"remark_{key}"
+            target_key = f"target_{full_key}"
+            remark_key = f"remark_{full_key}"
 
             if target_key not in st.session_state:
                 st.session_state[target_key] = item.get("target", "")
