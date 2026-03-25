@@ -66,7 +66,7 @@ def render_boxbuild():
 
         
         text = read_pdf(uploaded_pdf)
-        parsed = parse_form(text, uploaded_file)
+        parsed = parse_form(text, uploaded_pdf)
 
         st.write("PDF parse time:", time.time() - t_pdf)
         
@@ -184,7 +184,7 @@ def render_boxbuild():
         
         current_revision = project_data.get("revision")
 
-        if current_revision is None and uploaded_file is None:
+        if not uploaded_pdf:
             next_revision = "X"
         else:
             next_revision = get_next_revision(current_revision)
