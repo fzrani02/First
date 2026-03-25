@@ -27,4 +27,8 @@ def get_next_revision(revision):
     if revision == "B":
         return "C"
 
-    return revision
+    if revision == "C":
+        return "C" 
+
+    return "A"
+    
