@@ -265,75 +265,31 @@ def extract_member_pcis(lines):
 def extract_item_check(lines):
 
     items = []
-    start = None
 
-    for i, line in enumerate(lines):
+    buffer = ""
+    capturing = False
 
-        if "ITEM" in line.upper() and "CHECK" in line.upper():
-            start = i
-            break
-
-    if start is None:
-        print(" ITEMS TO CHECK NOT FOUND")
-        return items
-
-    print("ITEMS SECTION FOUND at line:", start)
-
-    for line in lines[start+1:]:
-
-        line = line.strip()
-        
-        if line.lower().startswith("item"):
-            continue
-
-        if not line or "----" in line:
-            continue
-
-        parts = line.split()
-
-        print("LINE:", line)
-
-        ## PARSE CHECKBOX JSON 
-
-        json_match = re.search(r"\{.*\}", line)
-        checkbox_data = None
-
-        if json_match:
-            json_text = json_match.group()
-            checkbox_data = parse_checkbox_json(json_text)
-            print("JSON FOUND:", checkbox_data)
-        
-
-        if len(parts) == 1:
-            items.append ({
-                "item": parts[0],
-                "pic": "",
-                "target": "",
-                "remark": "",
-                "checkbox": checkbox_data
-            })
-
-        elif len(parts) >= 4:
-            items.append({
-                "item": " ".join(parts[:-3]),
-                "pic": parts[-3],
-                "target": parts[-2] if len(parts) >= 2 else "",
-                "remark": " ".join(parts[-1:]) if len(parts) >= 1 else "",
-                "checkbox": checkbox_data 
-            })
-        else:
-            items.append ({
-                "item": line,
-                "pic": "",
-                "target": "",
-                "remark": "",
-                "checkbox": checkbox_data
-            })
+    for line in lines:
+        if "{" in line:
+            capturing = True
+            buffer = line.strip()
             
-    print(" TOTAL ITEMS:", len(items))
-    return items
+        elif capturing:
+            buffer += line.strip()
+
+        if capturing and "}" in line:
+            capturing = False
+
+            data = parse_checkbox_json(buffer)
+
+            if data:
+                items.append(data)
+
+            buffer = ""
+
+    return items 
+            
 
 
 
-
-
+    
