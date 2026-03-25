@@ -183,7 +183,11 @@ def render_boxbuild():
         t_export = time.time()
         
         current_revision = project_data.get("revision")
-        next_revision = get_next_revision(current_revision)
+
+        if current_revision is None and uploaded_file is None:
+            next_revision = "X"
+        else:
+            next_revision = get_next_revision(current_revision)
 
         # update data 
         project_data["revision"] = next_revision
