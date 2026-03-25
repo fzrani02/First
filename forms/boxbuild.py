@@ -41,7 +41,11 @@ def apply_checkbox_state(item_check):
             if right:
                 st.session_state[f"ict_{normalize_key(right)}"] = checkbox["pair"].get("checked", False)
 
+        key = normalize_key(left) if left else None
 
+        if key:
+            st.session_state[f"target_ict_{key}"] = item.get("target", "")
+            st.session_state[f"remark_ict_{key}"] = item.get("target", "")
 
 def render_boxbuild():
     import time
@@ -62,9 +66,18 @@ def render_boxbuild():
     parsed = None
     
     if uploaded_pdf and "parsed_data" not in st.session_state:
+        for member in parsed.get("member_plant", []):
+            dept = member["department"]
+            for m in ["m1","m2", "m3", "m4"]:
+                st.session_state[f"plant_{dept}_{m}"] = member.get(m,False)
+
+        for member in parsed.get("member_pcis", []):
+            dept = member["department"]
+            for m in ["m1","m2","m3", "m4"]:
+                st.session_state[f"pcis_{dept}_{m}"] = member.get(m, False)
+                
         t_pdf = time.time()
 
-        
         text = read_pdf(uploaded_pdf)
         parsed = parse_form(text, uploaded_pdf)
 
@@ -76,6 +89,15 @@ def render_boxbuild():
              st.session_state[key] = value
 
         apply_checkbox_state(parsed.get("item_check", []))
+        for item in parsed.get("item_check", []):
+            item_name = item.get("item", "")
+            key = normalize_key(item_name)
+
+            if "ict" in key:
+                continue
+
+            st.session_state[f"target_{key}"] = item.get("target", "")
+            st.session_state[f"target_{key}"] = item.get("remark", "")
 
     st.markdown("---")
 
