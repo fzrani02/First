@@ -1,21 +1,23 @@
 import streamlit as st
 import pandas as pd
+
 from components.header import render_header
 from components.project_form import render_project_form
-
 from components.team_table import render_team_table
 from components.items_to_check import render_items_to_check
 from components.items_to_check import normalize_key
+from components.items_to_check import SECTIONS
+
 
 from utils.revision_logic import get_editable_column
 from utils.pdf_import import read_pdf, parse_form
 from utils.revision_logic import get_next_revision
-from datetime import datetime
 from utils.pdf_export import generate_pdf
-
-from datetime import date
 from utils.database import load_database
 from utils.autosave import autosave
+
+from datetime import date
+from datetime import datetime
 
 def convert_to_dict(data_list):
     result = {}
@@ -95,8 +97,18 @@ def render_boxbuild():
             item_name = item.get("item", "")
             key = normalize_key(item_name)
 
-            if key.startswith("ict"):
+            section_found = None
+            for section, items in SECTIONS.items():
+                if item_name in items:
+                    section_found = section
+                    break
+
+            if not section_found:
                 continue
+
+            key_section = normalize_key(section_found)
+
+            full_key = f"{key_section}_{key_item}"
 
             target_key = f"target_{key}"
             remark_key = f"remark_{key}"
