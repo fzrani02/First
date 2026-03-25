@@ -66,6 +66,14 @@ def render_boxbuild():
     parsed = None
     
     if uploaded_pdf and "parsed_data" not in st.session_state:
+
+        t_pdf =time.time()
+        
+        text = read_pdf(uploaded_pdf)
+        parsed = parse_form(text, uploaded_pdf)
+
+        st.session_state["parsed_data"] = parsed
+
         for member in parsed.get("member_plant", []):
             dept = member["department"]
             for m in ["m1","m2", "m3", "m4"]:
@@ -75,29 +83,29 @@ def render_boxbuild():
             dept = member["department"]
             for m in ["m1","m2","m3", "m4"]:
                 st.session_state[f"pcis_{dept}_{m}"] = member.get(m, False)
-                
-        t_pdf = time.time()
 
-        text = read_pdf(uploaded_pdf)
-        parsed = parse_form(text, uploaded_pdf)
-
-        st.write("PDF parse time:", time.time() - t_pdf)
-        
-        st.session_state["parsed_data"] = parsed
-    
         for key, value in parsed["project_data"].items(): 
              st.session_state[key] = value
-
+    
         apply_checkbox_state(parsed.get("item_check", []))
+
+        st.write("PDF parse time:", time.time() - t_pdf)
+
         for item in parsed.get("item_check", []):
             item_name = item.get("item", "")
             key = normalize_key(item_name)
 
-            if "ict" in key:
+            if key.startswith("ict"):
                 continue
 
-            st.session_state[f"target_{key}"] = item.get("target", "")
-            st.session_state[f"target_{key}"] = item.get("remark", "")
+            target_key = f"target_{key}"
+            remark_key = f"remark_{key}"
+
+            if target_key not in st.session_state:
+                st.session_state[target_key] = item.get("target", "")
+
+            if remark_key not in st.session_state:
+                st.session_state[remark_key] = item.get("remark", "")
 
     st.markdown("---")
 
