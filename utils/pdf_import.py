@@ -10,6 +10,7 @@ def extract_revision_from_filename(filename):
 
 def parse_checkbox_json(text):
     try:
+        print("DEBUG BUFFER:", buffer)
         return json.loads(text)
     except:
         return None
