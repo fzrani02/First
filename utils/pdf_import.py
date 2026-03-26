@@ -315,7 +315,6 @@ def extract_item_check(lines):
     return items
 
 def extract_item_check_from_tables(pdf):
-    print("ROW:", row)
     items = []
     for page in pdf.pages:
         tables = page.extract_tables()
@@ -348,7 +347,10 @@ def extract_item_check_from_tables(pdf):
                             "item": item_name,
                             "checked": checked,
                             "pair_label": pair_label,
-                            "pair_checked": pair_checked
+                            "pair_checked": pair_checked,
+                            "pic":pic,
+                            "target": target,
+                            "remark": remark
                         })
 
                 except Exception as e:
