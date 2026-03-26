@@ -350,8 +350,8 @@ def extract_item_check_from_tables(pdf):
                             "pair_checked": pair_checked
                         })
 
-                        except Exception as e:
-                            print("JSON ERROR:", e)
+                except Exception as e:
+                    print("JSON ERROR:", e)
 
     return items
 
