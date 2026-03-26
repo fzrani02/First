@@ -311,7 +311,7 @@ def extract_item_check(lines):
                     "item": item_name,
                     "checked": checked,
                     "pair_label": pair_label,
-                    "pair_checked": pair_checked
+                    "pair_checked": pair_checked,
                     "pic":pic,
                     "target": target,
                     "remark": remark
