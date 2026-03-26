@@ -80,6 +80,8 @@ def render_boxbuild():
         text = read_pdf(uploaded_pdf)
         parsed = parse_form(text, uploaded_pdf)
 
+        st.write("DEBUG item_check:", parsed.get("item_check"))
+
         st.session_state["parsed_data"] = parsed
 
         for member in parsed.get("member_plant", []):
