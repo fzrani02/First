@@ -267,23 +267,28 @@ def extract_item_check(lines):
     items = []
 
     buffer = ""
+    bracket_count = 0
     capturing = False
 
     for line in lines:
-        if "{" in line:
+        # count bracket 
+        open_brace = line.count("{")
+        close_brace = line.count("}")
+
+        if open_brace > 0:
             capturing = True
-            buffer = line.strip()
-            
-        elif capturing:
-            buffer += line.strip()
 
-        if capturing and "}" in line:
+        if capturing:
+            buffer += line.strip() + " "
+            bracket_count += open_brace
+            bracket_count -= close_brace 
+
+        if capturing and bracket_count == 0:
             capturing = False
-
-            data = parse_checkbox_json(buffer)
+            data = parse_checkbox_json(buffer.strip())
 
             if data:
-                items_name = data.get("item")
+                item_name = None
                 checked = data.get("checked", False)
 
                 pair_label = None
@@ -293,7 +298,7 @@ def extract_item_check(lines):
                     pair_label = data["pair"].get("label")
                     pair_checked = data["pair"].get("checked", False)
 
-                items.append ({
+                items.append({
                     "item": item_name,
                     "checked": checked,
                     "pair_label": pair_label,
@@ -302,9 +307,5 @@ def extract_item_check(lines):
 
             buffer = ""
 
-    return items 
-            
+    return items
 
-
-
-    
