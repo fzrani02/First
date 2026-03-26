@@ -48,6 +48,9 @@ def apply_checkbox_state(item_check):
         st.session_state[f"target_ict_{key}"] = item.get("target", "")
         st.session_state[f"remark_ict_{key}"] = item.get("remark", "")
 
+        if key:
+            st.session_state[f"pic_ict_{key}"] = item.get("pic", "")
+
         pic_raw = item.get("pic", "")
         if pic_raw:
             st.session_state[f"pic_ict_{key}"] = [p.strip() for p in pic_raw.split(",")]
