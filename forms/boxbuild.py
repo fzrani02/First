@@ -27,6 +27,14 @@ def convert_to_dict(data_list):
     return result
 
 def apply_checkbox_state(item_check):
+    st.write("DEBUG KEY PDF:",
+        normalize_key("ICT Program / Fixture"))
+    
+    for section, items in SECTIONS.items():
+        for i in items:
+            if "ICT Program" in i:
+                st.write("DEBUG KEY SECTION:", normalize_key(i))
+                
     for item in item_check:
         
         left = item.get("item")
