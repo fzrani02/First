@@ -96,6 +96,11 @@ SECTIONS = {
     
     "TEST":[
         "ICT Program / Fixture",
+        "Agilent",
+        "Tri",
+        "Teradyne",
+        "Tescon",
+        "Genrad",
         "Flying Probe Test Program",
         "Board Level Test Program / Fixture",
         "Final Test Program / Fixture",
@@ -173,64 +178,8 @@ def render_items_to_check(df, item_check):
         for section, items in SECTIONS.items():
            with st.expander(section, expanded=False):
                for item in items:
-                   if item == "ICT Program / Fixture":
-                        c1,c2,c3,c4,c5 = st.columns([3,2,2,2,4])
-                    
-                        with c1:
-                            st.write("ICT Program / Fixture")
-                            
-                        with c3:
-                            st.multiselect("", engineer_list, key="pic_ict", label_visibility="collapsed")
-                            
-                        with c4:
-                            st.text_area("", key="target_ict", label_visibility="collapsed")
-                            
-                        with c5:
-                            st.text_area("", key="remark_ict", label_visibility="collapsed")
-                    
-                        for left, right in ICT_ROWS:
-                            c1,c2,c3,c4,c5 = st.columns([3,2,2,2,4])
-                    
-                            with c1:
-                                st.checkbox(left, key=f"ict_{normalize_key(left)}")
-                    
-                            with c2:
-                                if right:
-                                    st.checkbox(right, key=f"ict_{normalize_key(right)}")
-                    
-                            with c3:
-                                st.multiselect(
-                                    "",
-                                    engineer_list,
-                                    key=f"pic_ict_{normalize_key(left)}",
-                                    label_visibility="collapsed"
-                                )
-                    
-                            with c4:
-                                key_target = f"target_ict_{normalize_key(left)}"
-                                value_target = st.session_state.get(key_target, "")
-
-                                st.text_area(
-                                    "",
-                                    key=key_target,
-                                    height=100 if len(value_target) > 50 else 60,
-                                    label_visibility="collapsed"
-                                )
-                    
-                            with c5:
-                                key_remark = f"remark_ict_{normalize_key(left)}"
-                                value_remark = st.session_state.get(key_remark, "")
-                                
-                                st.text_area(
-                                    "",
-                                    key=key_remark,
-                                    height=120 if len(value_remark) > 50 else 80,
-                                    label_visibility="collapsed"
-                                )
-                           
-                   else:
-                       render_row(item, engineer_list, section)
-                       
+                   render_row(item, engineer_list, section)
+                   
                       
                         
 
