@@ -108,7 +108,7 @@ def render_boxbuild():
             if not item_name:
                 continue
 
-            name = item_name.lowe()
+            name = item_name.lower()
             
             
             item_name = item.get("item", "")
