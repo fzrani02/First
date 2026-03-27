@@ -46,6 +46,13 @@ def apply_checkbox_state(item_check):
         if not item_name:
             continue
 
+        if item_name in ["Agilent", "Teradyne", "Genrad"]:
+            st.session_state[f"ict_{normalize_key(item_name)}"] = item.get("checked", False)
+
+            pair_label = item.get("pair_label")
+            if pair_label:
+                st.session_state[f"ict_{normalize_key(pair_label)}"] = item.get("pair_checked", False)
+        
         section = get_section_by_item(item_name)
         if not section:
             continue
