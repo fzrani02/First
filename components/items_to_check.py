@@ -205,7 +205,7 @@ def render_items_to_check(df, item_check):
                                     st.checkbox(
                                         right, 
                                         key=key_right,
-                                        values=st.session_state.get(key_right, False)
+                                        value=st.session_state.get(key_right, False)
                                     )
                     
                             with c3:
