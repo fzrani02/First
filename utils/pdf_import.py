@@ -350,6 +350,10 @@ def extract_item_check_from_tables(pdf):
                         data =  json.loads(json_cell)
                         checked = data.get("checked", False)
 
+                        if "pair" in data:
+                            pair_label = data["pair"].get("label")
+                            pair_checked = data["pair"].get("checked", False)
+
                     except Exception as e:
                         print("JSON ERROR:", e)
                         
