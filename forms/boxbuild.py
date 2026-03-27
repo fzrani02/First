@@ -112,13 +112,23 @@ def render_boxbuild():
             
             
             item_name = item.get("item", "")
+            item_name = item_name.replace("\n", " ").strip()
             key_item = normalize_key(item_name)
 
             section_found = None
             for section, items in SECTIONS.items():
-                if item_name in items:
-                    section_found = section
-                    break
+                clean_item_name = item_name.replace("\n", " ").strip().lower()
+
+                for section, items in SECTIONS.items():
+                    for ref_item in items:
+                        clean_ref = ref_item.replace("\n", " ").strip().lower()
+
+                        if clean_item_name == clean_ref:
+                            section_found = section
+                            break
+
+                    if section_found:
+                        break
 
             if not section_found:
                 continue
