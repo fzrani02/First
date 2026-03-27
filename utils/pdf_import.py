@@ -342,7 +342,7 @@ def extract_item_check_from_tables(pdf):
                 pair_label = None
                 pair_checked = False
 
-                if not json_cell and "{" in json_cell:
+                if json_cell and "{" in json_cell:
                     try:
                         data =  json.loads(json_cell)
                         checked = data.get("checked", False)
