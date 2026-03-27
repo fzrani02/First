@@ -106,7 +106,7 @@ def render_boxbuild():
             if k.startswith("ict_"):
                 del st.session_state[k]
                 
-        apply_checkbox_state(parsed.get("item_check"), []))
+        apply_checkbox_state(parsed.get("item_check", []))
 
         t_pdf =time.time()
         
