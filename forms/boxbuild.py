@@ -101,50 +101,7 @@ def render_boxbuild():
 
         st.write("PDF parse time:", time.time() - t_pdf)
 
-        for item in parsed.get("item_check", []):
-
-            item_name = item.get("item")
-
-            if not item_name:
-                continue
-
-            name = item_name.lower()
-            
-            
-            item_name = item.get("item", "")
-            item_name = item_name.replace("\n", " ").strip()
-            key_item = normalize_key(item_name)
-
-            section_found = None
-            for section, items in SECTIONS.items():
-                clean_item_name = item_name.replace("\n", " ").strip().lower()
-
-                for section, items in SECTIONS.items():
-                    for ref_item in items:
-                        clean_ref = ref_item.replace("\n", " ").strip().lower()
-
-                        if clean_item_name == clean_ref:
-                            section_found = section
-                            break
-
-                    if section_found:
-                        break
-
-            if not section_found:
-                continue
-
-            key_section = normalize_key(section_found)
-
-            full_key = f"{key_section}_{key_item}"
-
-            target_key = f"target_{full_key}"
-            remark_key = f"remark_{full_key}"
-
-            if target_key not in st.session_state:
-                st.session_state[target_key] = item.get("target", "")
-
-            if remark_key not in st.session_state:
-                st.session_state[remark_key] = item.get("remark", "")
+    ################ sini
 
     st.markdown("---")
 
