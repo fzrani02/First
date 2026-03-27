@@ -10,7 +10,6 @@ def extract_revision_from_filename(filename):
 
 def parse_checkbox_json(text):
     try:
-        print("DEBUG BUFFER:", buffer)
         return json.loads(text)
     except:
         return None
@@ -331,7 +330,11 @@ def extract_item_check_from_tables(pdf):
                 if not row or len(row) < 5:
                     continue
 
-                item_name = row[1]
+                item_name = row[1] 
+                
+                if not item_name or str(item_name).strip() == "":
+                    continue
+                
                 json_cell = row[2]
                 pic = row[3]
                 target = row[4]
