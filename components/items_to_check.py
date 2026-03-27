@@ -192,11 +192,21 @@ def render_items_to_check(df, item_check):
                             c1,c2,c3,c4,c5 = st.columns([3,2,2,2,4])
                     
                             with c1:
-                                st.checkbox(left, key=f"ict_{normalize_key(left)}")
+                                key_left = f"ict_{normalize_key(left)}"
+                                st.checkbox(
+                                    left, 
+                                    key=key_left,
+                                    value = st.session_state.get(key_left, False)
+                                )
                     
                             with c2:
                                 if right:
-                                    st.checkbox(right, key=f"ict_{normalize_key(right)}")
+                                    key_right = f"ict_{normalize_key(right)}"
+                                    st.checkbox(
+                                        right, 
+                                        key=key_right,
+                                        values=st.session_state.get(key_right, False)
+                                    )
                     
                             with c3:
                                 st.multiselect(
