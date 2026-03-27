@@ -99,6 +99,9 @@ def render_boxbuild():
         parsed = parse_form(text, uploaded_pdf)
 
         st.write("DEBUG item_check:", parsed.get("item_check"))
+        st.write("PDF ITEMS:", [i["item"] for i in parsed["item_check"]])
+        for i in parsed["item_check"]:
+            st.write(i["item"], "->", get_section_by_item(i["item"]))
 
         st.session_state["parsed_data"] = parsed
 
