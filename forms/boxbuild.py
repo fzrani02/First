@@ -242,6 +242,11 @@ def render_boxbuild():
     autosave()
 
     st.markdown("---")
+
+    st.write("FINAL ICT STATE:")
+    for k, v in st.session_state.items():
+        if k.startswith("ict_"):
+            st.write(k, v)
     
     t_items = time.time()
     render_items_to_check(df, item_check)
